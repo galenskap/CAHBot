@@ -16,8 +16,7 @@ cogs = [
     "jishaku",
     "cogs.cah",
     "guildmanager.cog",
-    "cogs.errors",
-    "cogs.botlist"
+    "cogs.errors"
 ]
 
 bot = commands.Bot(
@@ -98,4 +97,3 @@ bot.tokens = [line.strip() for line in file]
 file.close()
 
 bot.run(bot.tokens[0])
-

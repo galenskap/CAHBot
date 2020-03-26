@@ -15,6 +15,7 @@ class CardsAgainstHumanity(commands.Cog):
         self.minPlayers = 3
         bot.allowStart = True
         packs = {
+            "marjorie": "Pack personnel",
             "base": "Just the basic, base pack",
             "spongebob": "SpongeBob themed cards!",
             "ex1": "The first extension pack.",
