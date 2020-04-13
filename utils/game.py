@@ -85,7 +85,7 @@ class Game:
         )
         await self.ctx.send(
             final_scores,
-            title=f"<:blobnitro:527721625659899904> The game has ended! Here are the scores\nScoreboard:",
+            title=f"Le jeu est terminé ! Voici les scores : \nScoreboard:",
             color=self.ctx.bot.colors["status"]
         )
 
@@ -98,9 +98,9 @@ class Game:
                     for coroutine in player.coroutines:
                         coroutine.cancel()
             await self.ctx.send(
-                '<a:blobleave:527721655162896397> The game ' +
-                ('has suddenly ended' if force else 'will end after this round') +
-                (f" due to {reason}." if reason else "."),
+                'Le jeu ' +
+                ('s\'est arrêté' if force else 'et se terminera après ce round') +
+                (f" à cause de {reason}." if reason else "."),
                 color=self.ctx.bot.colors["success"]
             )
 
@@ -109,7 +109,7 @@ class Game:
         for coroutine in player.coroutines:
             coroutine.cancel()
         embed = await self.ctx.send(
-            f'<a:blobleave:527721655162896397> {player.member} left the game, bye bye...',
+            f'{player.member} a quitté le jeu, bye bye...',
             color=self.ctx.bot.colors["success"]
         )
         if len(self.players) < self.min:
@@ -117,10 +117,10 @@ class Game:
                 return embed
             self.active = False
             embed = await self.ctx.send(
-                f'<a:blobleave:527721655162896397> There are too few players left to continue...',
+                f'Il n\'y a pas assez de joueurs pour continuer...',
                 color=self.ctx.bot.colors["success"]
             )
-            await self.end(True, "there not being enough players")
+            await self.end(True, "il n'y a  pas assez de joueurs")
         return embed
 
     async def begin_round(self):
@@ -139,22 +139,22 @@ class Game:
         )
         await self.ctx.send(
             scores,
-            title=f"<:blobnitro:527721625659899904> Scoreboard (before round {self.round_number}" +
+            title=f"Tableau des scores (avant le round {self.round_number}" +
                   (f", {self.score_to_win} point{'s' if self.score_to_win != 1 else ''}"
-                   f" needed to win):" if self.score_to_win is not None else ")"),
+                   f" pour gagner):" if self.score_to_win is not None else ")"),
             color=self.ctx.bot.colors["status"]
         )
         await asyncio.sleep(5)
         await self.ctx.send(
-            f"{question}\n\n<a:blobcouncil:527721654361522186> Everyone check your dms for your card list. "
-            f"The card tsar is {tsar.member.name}",
+            f"{question}\n\n Vérifiez dans vos messages privés pour voir vos cartes. "
+            f"Le tsar est {tsar.member.name}",
             color=self.ctx.bot.colors["info"]
         )
 
         coroutines = []
         for user in self.players:
             if user != tsar:
-                cards = f"In {self.ctx.mention}\n\n{question}\nThe card tsar is {tsar.member.name}\n\n" + \
+                cards = f"In {self.ctx.mention}\n\n{question}\nLe tsar est {tsar.member.name}\n\n" + \
                         "\n".join(
                             [f"{card_position + 1}: {card}" for card_position, card in enumerate(user.cards)]
                         )
@@ -179,7 +179,7 @@ class Game:
 
                     await player_to_wait_for.member.send(
                         embed=discord.Embed(
-                            title=f"Please select a card from 1 to 10. You have 2 and a half minutes to decide" +
+                            title=f"Choisis un numéro de carte de 1 à 10. Tu as 2min30 pour te décider" +
                                   (" (1/2)" if question.count(r"\_\_") == 2 else ""),
                             color=self.ctx.bot.colors["info"]
                         )
@@ -199,16 +199,16 @@ class Game:
                         await self.quit(player_to_wait_for)
                         return await player_to_wait_for.member.send(
                             embed=discord.Embed(
-                                title=f"<:blobconfused:527721625542590464> You have been removed from the game for "
-                                      f"inactivity.",
+                                title=f"Tu as été retiré du jeu pour "
+                                      f"inactivité.",
                                 color=self.ctx.bot.colors["success"]
                             )
                         )
                     if question.count(r"\_\_") == 2:
                         await player_to_wait_for.member.send(
                             embed=discord.Embed(
-                                title=f"Please select a card from 1 to 10. You have 2 and a half minutes to decide, you"
-                                      f" also can't pick the same card as your first card (2/2)",
+                                title=f"Choisis un numéro de carte de 1 à 10. Tu as 2min30 pour te décider. Tu"
+                                      f" ne peux pas choisir la même carte que la 1ère (2/2)",
                                 color=self.ctx.bot.colors["info"]
                             )
                         )
@@ -223,21 +223,21 @@ class Game:
                             await self.quit(player_to_wait_for)
                             await player_to_wait_for.member.send(
                                 embed=discord.Embed(
-                                    title=f"<:blobconfused:527721625542590464> You have been removed from the game for "
-                                          f"inactivity.",
+                                    title=f"Tu as été retiré du jeu pour "
+                                          f"inactivité.",
                                     color=self.ctx.bot.colors["success"]
                                 )
                             )
                     await player_to_wait_for.member.send(
                         embed=discord.Embed(
-                            title=f"Please wait for all players to select their card",
-                            description=f'The game will continue in {self.ctx.mention}',
+                            title=f"Attends que tous les joueurs aient choisi leurs cartes",
+                            description=f'Le jeu continuera dans {self.ctx.mention}',
                             color=self.ctx.bot.colors["success"]
                         )
                     )
                     s = "s" if question.count(r'\_\_') == 2 else ""
                     await self.ctx.send(
-                        f"{player_to_wait_for.member} has selected their card{s}",
+                        f"{player_to_wait_for.member} a choisi ses carte{s}",
                         color=self.ctx.bot.colors["success"]
                     )
                     player_to_wait_for.coroutines = []
@@ -249,8 +249,8 @@ class Game:
             else:
                 await user.member.send(
                     embed=discord.Embed(
-                        title=f"<a:blobhyperthinkfast:527721654353395713> You're the tsar this round",
-                        description="Sit tight and wait for everyone to pick their cards...",
+                        title=f"Tu es le tsar durant ce round",
+                        description="Prends un bol de pop-corn et attend que tout le monde ait choisi ses cartes...",
                         color=self.ctx.bot.colors["info"]
                     )
                 )
@@ -263,7 +263,7 @@ class Game:
             return
         await asyncio.gather(*coroutines, return_exceptions=True)
         await self.ctx.send(
-            "Everyone has submitted their cards"
+            "Tout le monde a soumis ses cartes"
         )
         if self.skip_round:
             for player in self.players:
@@ -285,7 +285,7 @@ class Game:
                              f'| {user.cards[int(user.second_card) - 1]}\n'
 
         embed = discord.Embed(
-            title=f'<a:blobcouncil:527721654361522186> Select the winner, {tsar.member.name}',
+            title=f'Choisis ta carte préférée, {tsar.member.name}',
             description=f'{question}\n\n{responses}',
             color=self.ctx.bot.colors["info"]
         )
@@ -298,7 +298,7 @@ class Game:
         await tsar.member.send(embed=embed)
         await self.ctx.channel.send(embed=embed)
         await self.ctx.send(
-            title=f"<a:blobcouncil:527721654361522186> Please answer in your DM within 5 minutes",
+            title=f"Tu as 5 minutes pour répondre en messages privés ",
             color=self.ctx.bot.colors["success"]
         )
 
@@ -329,7 +329,7 @@ class Game:
             ).content
             await tsar.member.send(
                 embed=discord.Embed(
-                    description=f"Selected. The game will continue in {self.ctx.mention}",
+                    description=f"Selected. Le jeu continue dans {self.ctx.mention}",
                     color=self.ctx.bot.colors["success"]
                 )
             )
@@ -340,7 +340,7 @@ class Game:
             await self.quit(tsar)
             await tsar.member.send(
                 embed=discord.Embed(
-                    title=f"<:blobconfused:527721625542590464> You have been removed from the game for inactivity.",
+                    title=f"Vous avez été retiré de la partie pour inactivité.",
                     color=self.ctx.bot.colors["success"]
                 )
             )
@@ -360,7 +360,7 @@ class Game:
             "\_\_", re.sub("\.$", "", winner.cards[int(winner.second_card) - 1]), 1)
         await self.ctx.send(
             f"**{winner.member.mention}** with **{card_in_context}**",
-            title=f"<:blobenjoy:527721625257508866> The winner is:",
+            title=f"Et notre vainqueur est :",
             color=self.ctx.bot.colors["success"]
         )
 
