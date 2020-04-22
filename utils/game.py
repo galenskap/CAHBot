@@ -237,7 +237,7 @@ class Game:
                     )
                     s = "s" if question.count(r'\_\_') == 2 else ""
                     await self.ctx.send(
-                        f"{player_to_wait_for.member} a choisi ses carte{s}",
+                        f"{player_to_wait_for.member} a choisi ses cartes",
                         color=self.ctx.bot.colors["success"]
                     )
                     player_to_wait_for.coroutines = []
