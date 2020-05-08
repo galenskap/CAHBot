@@ -25,7 +25,7 @@ bot = commands.Bot(
     help_command=help.HelpCommand(),
     owner_ids=[317731855317336067, 438733159748599813, 261900651230003201],
     activity=discord.Activity(
-        name="discord go by.",
+        name="vos conneries passer",
         type=discord.ActivityType.watching
     ),  # We create a discord activity to start up with
     status=discord.Status.idle
